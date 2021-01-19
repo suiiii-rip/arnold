@@ -5,6 +5,7 @@ val versions = new {
   val zioInteropCats = "2.2.0.1"
 //  val zioInteropReactivestreams = "1.3.0.7-2"
   val zioLogging = "0.5.4"
+  val zioConfig = "1.0.0-RC31-1"
 
   val http4s = "0.21.14"
   val circe = "0.13.0"
@@ -26,6 +27,9 @@ val dependencies = {
 //    val `zio-interop-reactivestreams` = "dev.zio" %% "zio-interop-reactivestreams" % zioInteropReactivestreams
     val `zio-logging` = "dev.zio" %% "zio-logging" % zioLogging
     val `zio-logging-slf4j` = "dev.zio" %% "zio-logging-slf4j" % zioLogging
+
+    val `zio-config` = "dev.zio" %% "zio-config" % zioConfig
+    val `zio-config-magnolia` = "dev.zio" %% "zio-config-magnolia" % zioConfig
 
     val `http4s-core` = "org.http4s" %% "http4s-core" % http4s
     val `http4s-server` = "org.http4s" %% "http4s-server" % http4s
@@ -89,6 +93,8 @@ lazy val app = Project(
         `zio-interop-cats`,
         `zio-logging`,
         `zio-logging-slf4j`,
+        `zio-config`,
+        `zio-config-magnolia`,
 
         `http4s-core`,
         `http4s-server`,

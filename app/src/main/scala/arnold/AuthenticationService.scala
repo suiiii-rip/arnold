@@ -12,8 +12,9 @@ object AuthenticationService {
   }
 
   val default: URLayer[AppConfig, AuthenticationService] =
-    ZLayer.fromService[Config, Service] { c =>
+    ZLayer.fromService[Config, Service] { config =>
       new Service {
+        val c = config.server
         val user = User(c.username, c.password)
 
         override def authenticate(

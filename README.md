@@ -13,4 +13,9 @@ configured using a REST interface.
 
 ## TODO
 
-- Config from environment
+- Config from environment with zio-config
+- add twitch4j
+- connect to chat with bot account
+- provide command prefix (!)
+- provide handler to custom event handling thingy within zio
+- send the command from command service if exists

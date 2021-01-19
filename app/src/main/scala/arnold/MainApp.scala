@@ -33,7 +33,7 @@ object MainApp extends zio.App {
 
     val loggingEnv = Slf4jLogger.make((ctx, msg) => msg)
 
-    val baseEnv = requires[Clock] ++ loggingEnv ++ AppConfig.hardDefault
+    val baseEnv = requires[Clock] ++ loggingEnv ++ AppConfig.fromEnv
 
     baseEnv >+>
       CommandService.inMemory >+>
@@ -52,7 +52,7 @@ object MainApp extends zio.App {
         server <- ZIO.runtime[AppEnv].flatMap { implicit rts =>
           val config = rts.environment.get[Config]
           BlazeServerBuilder[AppTask](ex)
-            .bindHttp(config.port, "0.0.0.0")
+            .bindHttp(config.server.port, "0.0.0.0")
             .withHttpApp(httpApp)
             .serve
             .compile
