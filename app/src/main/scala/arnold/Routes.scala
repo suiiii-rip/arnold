@@ -54,14 +54,21 @@ trait ApiRoutes[R <: CommandService with AuthenticationService with Logging] {
     case req @ PUT -> Root / "command" / command as user => {
       val txt = req.req.bodyText.toZStream().fold("")((s, s1) => s + s1)
 
-      val res = for {
+      def toOp(s: String) = Option(s.trim()).filter(_.nonEmpty)
+      (for {
         text <- txt
-        cmd = Command(command, text)
-        _ <- log.info(s"Adding command $cmd")
-        _ <- set(cmd)
-      } yield (())
-
-      res.foldM(t => InternalServerError(t.getMessage()), _ => Ok())
+        keyword = toOp(command)
+        tt = toOp(text)
+        res <- (keyword, tt) match {
+          case (Some(k), Some(v)) => for {
+            _ <- log.info(s"Adding command $k, $v")
+            _ <- set(Command(k, v))
+            r <- Ok()
+          } yield r
+          case _ => BadRequest()
+        }
+      } yield res
+      ).catchAll(t => InternalServerError(t.getMessage()))
     }
   }
 

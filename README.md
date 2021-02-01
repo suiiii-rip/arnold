@@ -13,7 +13,6 @@ configured using a REST interface.
 
 ## TODO
 
-- Config from environment with zio-config
 - add twitch4j
 - connect to chat with bot account
 - provide command prefix (!)

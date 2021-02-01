@@ -14,17 +14,20 @@ import java.util.concurrent.Executors
 
 import AuthenticationService._
 import CommandService._
+import TwitchClient._
+import TwitchChat._
 import zio.clock.Clock
 import arnold.AppConfig._
 
 object MainApp extends zio.App {
 
-  type AppEnv = 
+  type AppEnv =
     CommandService
-    with AuthenticationService
-    with AppConfig
-    with Clock
-    with Logging
+      with Chat
+      with AuthenticationService
+      with AppConfig
+      with Clock
+      with Logging
 
   type AppTask[A] = RIO[AppEnv, A]
 
@@ -35,8 +38,13 @@ object MainApp extends zio.App {
 
     val baseEnv = requires[Clock] ++ loggingEnv ++ AppConfig.fromEnv
 
+    val chatEnv = requires[AppConfig] ++ requires[CommandService] ++
+      requires[Logging] >+>
+      TwitchClient.client >+> TwitchChat.default
+
     baseEnv >+>
       CommandService.inMemory >+>
+      chatEnv >+>
       AuthenticationService.default
   }
 

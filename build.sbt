@@ -12,6 +12,8 @@ val versions = new {
   val logback = "1.2.3"
   val reactivestreams = "1.0.3"
 
+  val twitch4j = "1.1.3"
+
   val scalatest = "3.2.3"
   val scalatic = "3.2.2"
 
@@ -43,6 +45,8 @@ val dependencies = {
     val `logback-classic` = "ch.qos.logback" % "logback-classic" % logback
 //    val `reactive-streams` = "org.reactivestreams" % "reactive-streams" % reactivestreams
 
+    val twitch4j = "com.github.twitch4j" % "twitch4j" % versions.twitch4j
+
     val scalatest = "org.scalatest" %% "scalatest" % versions.scalatest % "test"
     val scalatic = "org.scalactic" %% "scalactic" % versions.scalatic
   }
@@ -53,6 +57,7 @@ val commonSettings = Seq(
   version := "1.0.0-SNAPSHOT",
   scalaVersion := versions.scala,
   scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8"),
+  resolvers += Resolver.jcenterRepo,
   dependencyOverrides ++= {
     import dependencies._
     Seq(
@@ -104,6 +109,8 @@ lazy val app = Project(
 
         `circe-core`,
         `circe-generic`,
+
+        `twitch4j`,
 
       )
     },

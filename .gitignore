@@ -137,3 +137,5 @@ metals.sbt
 
 # vim
 .vim/
+
+.envrc
