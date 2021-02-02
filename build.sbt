@@ -46,6 +46,8 @@ val dependencies = {
 //    val `reactive-streams` = "org.reactivestreams" % "reactive-streams" % reactivestreams
 
     val twitch4j = "com.github.twitch4j" % "twitch4j" % versions.twitch4j
+    val `twitch4j-auth` = "com.github.twitch4j" % "twitch4j-auth" % versions.twitch4j
+    val `twitch4j-chat` = "com.github.twitch4j" % "twitch4j-chat" % versions.twitch4j
 
     val scalatest = "org.scalatest" %% "scalatest" % versions.scalatest % "test"
     val scalatic = "org.scalactic" %% "scalactic" % versions.scalatic
@@ -111,6 +113,8 @@ lazy val app = Project(
         `circe-generic`,
 
         `twitch4j`,
+        `twitch4j-auth`,
+        `twitch4j-chat`,
 
       )
     },
@@ -119,6 +123,13 @@ lazy val app = Project(
     undeclaredCompileDependenciesFilter -= moduleFilter("dev.zio", "izumi-reflect"),
     undeclaredCompileDependenciesFilter -= moduleFilter("org.typelevel", "cats-core"),
     undeclaredCompileDependenciesFilter -= moduleFilter("org.typelevel", "cats-effect"),
+    // twitch4j
+    undeclaredCompileDependenciesFilter -= moduleFilter("com.github.philippheuer.credentialmanager", "credentialmanager"),
+    undeclaredCompileDependenciesFilter -= moduleFilter("com.github.philippheuer.events4j", "events4j-api"),
+    undeclaredCompileDependenciesFilter -= moduleFilter("com.github.philippheuer.events4j", "events4j-core"),
+    // zio config
+    undeclaredCompileDependenciesFilter -= moduleFilter("com.propensive", "magnolia"),
+    undeclaredCompileDependenciesFilter -= moduleFilter("com.propensive", "mercator"),
     unusedCompileDependenciesFilter -= moduleFilter("ch.qos.logback", "logback-classic"),
     crossPaths := false,
 
